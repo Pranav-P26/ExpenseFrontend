@@ -15,3 +15,6 @@ Expense Tracker is a web application that allows users to track their expenses, 
 - **Backend**: Node.js, Express.js (or any other backend technology)
 - **Database**: MongoDB, PostgreSQL (or any other database)
 - **Version Control**: Git, GitHub
+
+## Version
+This repository is used for frontend development only

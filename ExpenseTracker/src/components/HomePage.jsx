@@ -3,16 +3,15 @@ import { AppBar, Toolbar, IconButton, Typography, Button, Collapse, List, ListIt
 import { Menu as MenuIcon, ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon } from '@mui/icons-material';
 import ExpenserLogo from '../assets/ExpenserLogo.png';
 
-// HomePage component definition
 const HomePage = () => {
-  // State to manage the menu's open/close status
+  // State to manage the mobile menu open/close
   const [menuOpen, setMenuOpen] = useState(false);
-
-  // Theme and media query to determine if the screen size is mobile
+  
+  // Use MUI's useTheme and useMediaQuery hooks for responsive design
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  // Function to toggle the menu open/close state
+  // Function to toggle the mobile menu
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
@@ -21,22 +20,21 @@ const HomePage = () => {
   const menuItems = ['Dashboard', 'Analytics', 'Reports'];
 
   return (
-    // Main container with background color and minimum height
     <Box sx={{ backgroundColor: '#8ecae6', minHeight: '100vh' }}>
-      {/* AppBar component for the navigation bar */}
+      {/* AppBar component for the header */}
       <AppBar position="static" style={{ backgroundColor: '#023047' }}>
-        <Toolbar sx={{ justifyContent: 'space-between' }}>
-          {/* Logo and Site Name */}
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          {/* Logo and app name */}
+          <Box sx={{ display: 'flex', alignItems: 'center', width: '33%' }}>
             <img src={ExpenserLogo} alt="Expenser Logo" style={{ height: '40px', marginRight: '10px' }} />
             <Typography variant="h6" component="div">
               Expenser
             </Typography>
           </Box>
 
-          {/* Menu items for larger screens */}
+          {/* Navigation links for non-mobile screens */}
           {!isMobile && (
-            <Box sx={{ display: 'flex', justifyContent: 'center', flexGrow: 1 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', width: '33%' }}>
               {menuItems.map((item) => (
                 <Button key={item} color="inherit">
                   {item}
@@ -45,28 +43,30 @@ const HomePage = () => {
             </Box>
           )}
 
-          {/* Menu icon for mobile screens */}
-          {isMobile && (
-            <IconButton
-              size="large"
-              edge="end"
-              color="inherit"
-              aria-label="menu"
-              onClick={toggleMenu}
-            >
-              {menuOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-            </IconButton>
-          )}
+          {/* Mobile menu toggle button */}
+          <Box sx={{ width: '33%', display: 'flex', justifyContent: 'flex-end' }}>
+            {isMobile && (
+              <IconButton
+                size="large"
+                edge="end"
+                color="inherit"
+                aria-label="menu"
+                onClick={toggleMenu}
+              >
+                {menuOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+              </IconButton>
+            )}
+          </Box>
         </Toolbar>
       </AppBar>
 
-      {/* Collapsible menu for mobile screens */}
+      {/* Collapsible mobile menu */}
       {isMobile && (
         <Collapse in={menuOpen}>
           <Paper elevation={3}>
             <List component="nav" aria-label="main mailbox folders">
               {menuItems.map((item) => (
-                <ListItem component="button" key={item}>
+                <ListItem button key={item}>
                   <ListItemText primary={item} />
                 </ListItem>
               ))}

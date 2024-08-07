@@ -28,7 +28,6 @@ import { styled } from "@mui/system";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import ExpenserLogo from "../../assets/ExpenserLogo.png";
-import GraphAnimation from "./GraphAnimation";
 
 // Styled components
 const StyledAppBar = styled(AppBar)({
@@ -96,7 +95,7 @@ const HeroSection = styled(Box)(({ theme }) => ({
   alignItems: "center",
   position: "relative",
   overflow: "hidden",
-  background: "linear-gradient(to top, #0a2472 0%, #1e3a8a 100%)",
+  background: "linear-gradient(to top, #023047 0%, #034160 100%)",
   color: "white",
 }));
 
@@ -118,7 +117,7 @@ const HeroSubtitle = styled(motion.p)({
   marginBottom: "30px",
 });
 
-const HeroButton = styled(motion.button)({
+const HeroButton = styled(motion.button)(({ theme }) => ({
   backgroundColor: "#ffb703",
   color: "#023047",
   border: "none",
@@ -126,16 +125,30 @@ const HeroButton = styled(motion.button)({
   fontSize: "1.1rem",
   fontWeight: "bold",
   cursor: "pointer",
-  transition: "all 0.3s ease",
+  transition: "background-color 0.3s, border-radius 0.3s, transform 0.3s",
+  borderRadius: "8px",
   "&:hover": {
     backgroundColor: "#fb8500",
+    borderRadius: "20px",
     transform: "translateY(-2px)",
   },
+}));
+
+const GraphAnimation = styled(motion.div)({
+  position: "absolute",
+  right: "5%",
+  top: "50%",
+  transform: "translateY(-50%)",
+  width: "40%",
+  height: "300px",
+  background: 'url("/path-to-your-graph-svg.svg") no-repeat center center',
+  backgroundSize: "contain",
 });
 
 const FloatingElement = styled(motion.div)({
   position: "absolute",
-  color: "rgba(255, 215, 0, 0.3)",
+  color: "white",
+  textShadow: "0 0 5px rgba(255, 255, 255, 0.5)", // Optional: adds a subtle glow
 });
 
 const AnimatedSection = ({ children }) => {
@@ -228,6 +241,10 @@ const HomePage = () => {
     {
       title: "Multi-currency Support",
       description: "Track expenses in different currencies",
+    },
+    {
+      title: "Get Assistance",
+      description: "Get AI assistance to help manage your spending",
     },
   ];
 
@@ -322,8 +339,12 @@ const HomePage = () => {
             Start Saving
           </HeroButton>
         </HeroContent>
-        <GraphAnimation />
-        {[...Array(10)].map((_, index) => (
+        <GraphAnimation
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.6 }}
+        />
+        {[...Array(30)].map((_, index) => (
           <FloatingElement
             key={index}
             style={{
@@ -392,7 +413,7 @@ const HomePage = () => {
               </SectionTitle>
               <Grid container spacing={4}>
                 {features.map((feature, index) => (
-                  <Grid item xs={12} sm={6} md={3} key={index}>
+                  <Grid item xs={12} sm={6} md={2.4} key={index}>
                     <FeatureCard>
                       <CardContent>
                         <Box
